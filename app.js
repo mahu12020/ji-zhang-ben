@@ -217,14 +217,18 @@
     return null;
   }
 
+  /* 本机存储不可用时（无痕模式/隐私设置），不中断应用：内存继续跑，云端同步兜底 */
+  var storageWarning = false;
+
   function persist() {
     try {
       localStorage.setItem(STORE_KEY, JSON.stringify({
         ledger_cycles: state.cycles,
         ledger_records: state.records
       }));
+      storageWarning = false;
     } catch (e) {
-      throw new Error('本机存储写入失败：浏览器存储不可用（无痕模式或空间不足）。');
+      storageWarning = true;
     }
   }
 
@@ -322,9 +326,22 @@
     return new TextDecoder('utf-8').decode(bytes);
   }
 
+  /** 带超时的 fetch：国内网络连 GitHub 可能长时间挂起，超时后走备用通道 */
+  function fetchWithTimeout(url, opts, ms) {
+    opts = opts || {};
+    if (typeof AbortController === 'undefined') return fetch(url, opts);
+    var ctrl = new AbortController();
+    var timer = setTimeout(function () { try { ctrl.abort(); } catch (e2) { /* 忽略 */ } }, ms || 15000);
+    opts.signal = ctrl.signal;
+    return fetch(url, opts).then(
+      function (res) { clearTimeout(timer); return res; },
+      function (err) { clearTimeout(timer); throw err; }
+    );
+  }
+
   /** 只取 ledger.json 的 sha（写入前置检查用），文件不存在返回 null */
   async function loadSha() {
-    var res = await fetch(ghApiUrl() + '?ref=' + GH.branch, { headers: ghApiHeaders() });
+    var res = await fetchWithTimeout(ghApiUrl() + '?ref=' + GH.branch, { headers: ghApiHeaders() });
     if (res.status === 404) { remoteSha = null; return null; }
     if (!res.ok) throw new Error('GitHub 读取失败（HTTP ' + res.status + '）');
     var j = await res.json();
@@ -341,7 +358,7 @@
   async function fetchRemote() {
     // 主通道：Contents API
     try {
-      var res = await fetch(ghApiUrl() + '?ref=' + GH.branch, { headers: ghApiHeaders() });
+      var res = await fetchWithTimeout(ghApiUrl() + '?ref=' + GH.branch, { headers: ghApiHeaders() });
       if (res.ok) {
         var j = await res.json();
         remoteSha = j.sha;
@@ -355,7 +372,7 @@
 
     // 备用通道：raw
     try {
-      var res2 = await fetch(ghRawUrl(), { cache: 'no-store' });
+      var res2 = await fetchWithTimeout(ghRawUrl(), { cache: 'no-store' }, 8000);
       if (res2.ok) {
         var txt = await res2.text();
         if (txt.trim()) {
@@ -438,7 +455,7 @@
         branch: GH.branch
       };
       if (remoteSha) body.sha = remoteSha;
-      var res = await fetch(ghApiUrl(), { method: 'PUT', headers: ghApiHeaders(), body: JSON.stringify(body) });
+      var res = await fetchWithTimeout(ghApiUrl(), { method: 'PUT', headers: ghApiHeaders(), body: JSON.stringify(body) }, 20000);
 
       if (res.status === 409 || res.status === 422) {
         // sha 已过期（别处先写入了）：拉云端 → 合并 → 重试
@@ -487,7 +504,7 @@
       syncError = e;
       updateFooter();
       if (showToast) toast('云端拉取失败：' + (e.message || e), 'err');
-      return null;
+      return 'fail';
     }
   }
 
@@ -1138,9 +1155,11 @@
       t.textContent = '云端同步失败（数据已存本机，点刷新可重试）：' + (syncError.message || syncError);
     } else if (state.lastSync) {
       t.textContent = '已同步到 GitHub · 最近更新 ' +
-        pad2(state.lastSync.getHours()) + ':' + pad2(state.lastSync.getMinutes());
+        pad2(state.lastSync.getHours()) + ':' + pad2(state.lastSync.getMinutes()) +
+        (storageWarning ? ' · 本机存储不可用，数据以云端为准' : '');
     } else if (!ghGetToken()) {
-      t.textContent = '读取云端正常；记账后首次同步需配置密钥（页脚「同步密钥」）';
+      t.textContent = '读取云端正常；记账后首次同步需配置密钥（页脚「同步密钥」）' +
+        (storageWarning ? ' · 本机存储不可用，数据以云端为准' : '');
     } else {
       t.textContent = '数据保存在本机浏览器';
     }
@@ -1657,8 +1676,8 @@
     // 2) 后台从 GitHub 拉取云端最新数据并合并
     if (!state.error) {
       var remote = await pullRemote(false);
-      // 3) 云端还没有数据文件（仓库刚建）→ 把本地数据初始化上传
-      if (!remote) queuePush('初始化账本数据');
+      // 3) 云端确认还没有数据文件 → 把本地数据初始化上传（网络失败则不动作）
+      if (remote === null) queuePush('初始化账本数据');
     }
   }
 
