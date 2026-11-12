@@ -24,6 +24,16 @@
   ],
   "ledger_records": [
     {
+      "id": 151,
+      "owner": "hu",
+      "amount": 23.89,
+      "purpose": "personal",
+      "kind": "expense",
+      "spent_on": "2026-11-11",
+      "note": "打车去沈杜公路",
+      "created_at": "2026-11-12T05:38:47.995Z"
+    },
+    {
       "id": 150,
       "owner": "hu",
       "amount": 173.19,
@@ -1484,5 +1494,5 @@
       "created_at": "2026-10-09T13:47:39.52045+08:00"
     }
   ],
-  "synced_at": "2026-11-12T05:38:29.337Z"
+  "synced_at": "2026-11-12T05:38:49.200Z"
 }
