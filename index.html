@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFF7E9">
+<title>记账本</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app">
+    <header class="app-header">
+      <div class="header-inner">
+        <div class="brand">
+          <span class="brand-mark">记</span>
+          <div class="brand-text">
+            <h1>记账本</h1>
+            <p class="brand-sub" id="brandSub">马 &amp; 胡 · 共同账本</p>
+          </div>
+        </div>
+        <button class="icon-btn" id="refreshBtn" type="button" title="刷新数据" aria-label="刷新数据">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12a9 9 0 1 1-2.64-6.36"></path>
+            <path d="M21 3v6h-6"></path>
+          </svg>
+        </button>
+      </div>
+      <nav class="role-switch" id="roleSwitch" role="tablist" aria-label="切换查看角色">
+        <span class="role-thumb" id="roleThumb"></span>
+        <button class="role-tab" type="button" data-role="ma" role="tab" aria-selected="true">马</button>
+        <button class="role-tab" type="button" data-role="hu" role="tab" aria-selected="false">胡</button>
+        <button class="role-tab" type="button" data-role="all" role="tab" aria-selected="false">总览</button>
+      </nav>
+    </header>
+
+    <main id="main" class="main"></main>
+
+    <footer class="app-footer">
+      <span id="footerNote">正在连接 GitHub 同步…</span>
+      <span class="foot-actions">
+        <button class="foot-btn" id="exportBtn" type="button">导出</button>
+        <button class="foot-btn" id="importBtn" type="button">导入</button>
+        <input type="file" id="importFile" accept="application/json,.json" hidden>
+      </span>
+    </footer>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <div id="overlay" class="overlay" hidden></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
