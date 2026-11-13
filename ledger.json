@@ -24,6 +24,16 @@
   ],
   "ledger_records": [
     {
+      "id": 159,
+      "owner": "hu",
+      "amount": 50,
+      "purpose": "income",
+      "kind": "income",
+      "spent_on": "2026-11-13",
+      "note": "支付宝转账",
+      "created_at": "2026-11-13T08:02:21.470Z"
+    },
+    {
       "id": 158,
       "owner": "ma",
       "amount": 600,
@@ -1564,5 +1574,5 @@
       "created_at": "2026-10-09T13:47:39.52045+08:00"
     }
   ],
-  "synced_at": "2026-11-13T00:44:24.942Z"
+  "synced_at": "2026-11-13T08:02:22.678Z"
 }
