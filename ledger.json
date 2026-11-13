@@ -24,6 +24,16 @@
   ],
   "ledger_records": [
     {
+      "id": 157,
+      "owner": "ma",
+      "amount": 26,
+      "purpose": "personal",
+      "kind": "expense",
+      "spent_on": "2026-11-13",
+      "note": "早饭，小馄饨",
+      "created_at": "2026-11-13T00:43:00.624Z"
+    },
+    {
       "id": 156,
       "owner": "ma",
       "amount": 84,
@@ -1544,5 +1554,5 @@
       "created_at": "2026-10-09T13:47:39.52045+08:00"
     }
   ],
-  "synced_at": "2026-11-13T00:42:47.918Z"
+  "synced_at": "2026-11-13T00:43:01.826Z"
 }
