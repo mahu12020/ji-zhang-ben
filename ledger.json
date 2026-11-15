@@ -31,6 +31,16 @@
   ],
   "ledger_records": [
     {
+      "id": 168,
+      "owner": "ma",
+      "amount": 15,
+      "purpose": "personal",
+      "kind": "expense",
+      "spent_on": "2026-11-15",
+      "note": "停车费",
+      "created_at": "2026-11-15T06:27:00.090Z"
+    },
+    {
       "id": 167,
       "owner": "hu",
       "amount": 38.8,
@@ -1651,5 +1661,5 @@
       "created_at": "2026-10-09T13:47:39.52045+08:00"
     }
   ],
-  "synced_at": "2026-11-15T05:04:16.540Z"
+  "synced_at": "2026-11-15T06:27:01.294Z"
 }
