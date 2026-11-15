@@ -31,6 +31,16 @@
   ],
   "ledger_records": [
     {
+      "id": 165,
+      "owner": "ma",
+      "amount": 94.24,
+      "purpose": "personal",
+      "kind": "expense",
+      "spent_on": "2026-11-15",
+      "note": "中饭",
+      "created_at": "2026-11-15T03:29:14.717Z"
+    },
+    {
       "id": 163,
       "owner": "ma",
       "amount": 5,
@@ -1621,5 +1631,5 @@
       "created_at": "2026-10-09T13:47:39.52045+08:00"
     }
   ],
-  "synced_at": "2026-11-14T23:16:07.471Z"
+  "synced_at": "2026-11-15T03:29:15.935Z"
 }
