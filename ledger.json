@@ -31,6 +31,16 @@
   ],
   "ledger_records": [
     {
+      "id": 170,
+      "owner": "hu",
+      "amount": 99,
+      "purpose": "family",
+      "kind": "expense",
+      "spent_on": "2026-11-16",
+      "note": "京东会员",
+      "created_at": "2026-11-16T04:42:25.841Z"
+    },
+    {
       "id": 169,
       "owner": "hu",
       "amount": 99.9,
@@ -1671,5 +1681,5 @@
       "created_at": "2026-10-09T13:47:39.52045+08:00"
     }
   ],
-  "synced_at": "2026-11-16T04:07:15.217Z"
+  "synced_at": "2026-11-16T04:42:27.051Z"
 }
