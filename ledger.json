@@ -31,6 +31,16 @@
   ],
   "ledger_records": [
     {
+      "id": 198,
+      "owner": "hu",
+      "amount": 136.9,
+      "purpose": "family",
+      "kind": "expense",
+      "spent_on": "2026-11-23",
+      "note": "小马衣服，裤子",
+      "created_at": "2026-11-23T00:03:38.220Z"
+    },
+    {
       "id": 197,
       "owner": "ma",
       "amount": 23,
@@ -1941,5 +1951,5 @@
       "created_at": "2026-10-09T13:47:39.52045+08:00"
     }
   ],
-  "synced_at": "2026-11-22T14:04:33.764Z"
+  "synced_at": "2026-11-23T00:03:39.427Z"
 }
