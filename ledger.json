@@ -31,6 +31,16 @@
   ],
   "ledger_records": [
     {
+      "id": 203,
+      "owner": "hu",
+      "amount": 5.35,
+      "purpose": "personal",
+      "kind": "expense",
+      "spent_on": "2026-11-24",
+      "note": "早饭",
+      "created_at": "2026-11-24T09:17:11.525Z"
+    },
+    {
       "id": 202,
       "owner": "hu",
       "amount": 24,
@@ -1991,5 +2001,5 @@
       "created_at": "2026-10-09T13:47:39.52045+08:00"
     }
   ],
-  "synced_at": "2026-11-23T05:57:12.098Z"
+  "synced_at": "2026-11-24T09:17:12.735Z"
 }
